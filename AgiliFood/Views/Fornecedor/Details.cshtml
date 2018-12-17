@@ -1,0 +1,66 @@
+﻿@model AgiliFood.Models.Fornecedor
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Fornecedor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UsuarioId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UsuarioId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cnpj)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cnpj)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomeResponsavel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomeResponsavel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomeFantasia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomeFantasia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RazaoSocial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RazaoSocial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

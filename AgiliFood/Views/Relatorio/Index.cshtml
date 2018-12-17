@@ -1,0 +1,89 @@
+﻿@using AgiliFood.Models
+@model IEnumerable<Grupo<string, AgiliFood.Models.Pedido>>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm("Index", "Relatorio"))
+{
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    Nome: @Html.Editor("nomeUsuario", new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+                <div class="col-lg-2">
+                    Data Inicial: @Html.Editor("dataInicial", new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                </div>
+                <div class="col-lg-2">
+                    Data Final: @Html.Editor("dataFinal", new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                    
+                </div>
+                <div class="col-lg-2" style="margin-top:22px">
+                    <input type="submit" value="Search" />
+                </div>
+            </div>
+        </div>
+}
+
+
+    <table class="table">
+        <tr>
+            <th>
+                Usuário
+            </th>
+            <th>
+                Fornecedor
+            </th>
+            <th>
+                Data do pedido
+            </th>
+            <th>
+                Itens Pedidos
+            </th>
+            <th>
+                Cardápio
+            </th>
+            <th>
+                Valor do pedido
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var pedido in Model)
+        {
+            <tr><th colspan="6" style="background-color: lightsteelblue">@pedido.Key</th></tr>
+            foreach (var item in pedido.Values)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UsuarioNome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FornecedorNome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItensPedidos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItensCardapioSelecionado)
+                </td>
+                <td>
+                    R$ @Html.DisplayFor(modelItem => item.Valor)
+                </td>
+
+
+            </tr>
+            }
+        }
+
+    </table>

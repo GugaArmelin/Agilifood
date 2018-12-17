@@ -1,0 +1,181 @@
+﻿@model AgiliFood.Models.Pedido
+
+@{
+    /**/
+
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div class="form-horizontal">
+    <h4>Pedido</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cardapioModal">
+            Cardápios do dia!
+        </button>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ItensCardapioSelecionado, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.ItensCardapioSelecionado, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ItensCardapioSelecionado, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <table style="width:100%">
+        <tr>
+            <td style="width:70%">
+                @if (Model.Produtos != null)
+                {
+                    <span style="font-size: x-large; font-weight:bolder">Produtos</span>
+
+                    <table class="table">
+
+                        <tr>
+                            <th style="font-size: large; font-weight:bolder">Marmitas</th>
+                        </tr>
+                        @foreach (var produtos in Model.Produtos)
+                        {
+                            if (produtos.Tipo == "Marmitas")
+                            {
+
+                                <tr>
+                                    <td style="width:300px">
+                                        @Html.DisplayFor(modelItem => produtos.Nome)
+                                    </td>
+                                    <td style="width:100px">
+                                        R$ @Html.DisplayFor(p => produtos.Valor)
+                                    </td>
+                                    <td style="width:50px">
+                                        <button type="button" onclick="location.href='@Url.Action("AumentaValor", "Pedido", new { fornecedorId = Model.FornecedorId, data = Model.Data, cardapios = Model.Cardapios, itensSelecionados = Model.ItensCardapioSelecionado, valorPedido = Model.Valor, valor = produtos.Valor, observacao = Model.Observacao, itensP = produtos.Nome })'">+</button>
+
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                    </table>
+
+                    <table class="table">
+                        <tr>
+                            <th style="font-size: large; font-weight:bolder">Bebidas</th>
+                        </tr>
+                        @foreach (var produtos in Model.Produtos)
+                        {
+                            if (produtos.Tipo == "Bebidas")
+                            {
+                                <tr>
+                                    <td style="width:300px">
+                                        @Html.DisplayFor(modelItem => produtos.Nome)
+                                    </td>
+                                    <td style="width:100px">
+                                        R$ @Html.DisplayFor(p => produtos.Valor)
+                                    </td>
+                                    <td style="width:50px">
+                                        <button type="button" onclick="location.href='@Url.Action("AumentaValor", "Pedido", new { fornecedorId = Model.FornecedorId, data = Model.Data, cardapios = Model.Cardapios, itensSelecionados = Model.ItensCardapioSelecionado, valorPedido = Model.Valor, valor = produtos.Valor, observacao = Model.Observacao, itensP = produtos.Nome })'">+</button>
+                                    </td>
+                                </tr>
+
+
+                            }
+                        }
+                    </table>
+
+
+                    <table class="table">
+                        <tr>
+                            <th style="font-size: large; font-weight:bolder">Sobremesas</th>
+                        </tr>
+                        @foreach (var produtos in Model.Produtos)
+                        {
+                            if (produtos.Tipo == "Sobremesas")
+                            {
+                                <tr>
+                                    <td style="width:300px">
+                                        @Html.DisplayFor(modelItem => produtos.Nome)
+                                    </td>
+                                    <td style="width:100px">
+                                        R$ @Html.DisplayFor(p => produtos.Valor)
+                                    </td>
+                                    <td style="width:50px">
+                                        <button type="button" onclick="location.href='@Url.Action("AumentaValor", "Pedido", new { fornecedorId = Model.FornecedorId, data = Model.Data, cardapios = Model.Cardapios, itensSelecionados = Model.ItensCardapioSelecionado, valorPedido = Model.Valor, valor = produtos.Valor, observacao = Model.Observacao, itensP = produtos.Nome })'">+</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                }
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <th style="font-size: large; font-weight:bolder">   Seu Pedido</th>
+                    </tr>
+                    <tr>
+                        <th id="ValorTotal" style="font-size: large">  R$ @Html.DisplayFor(m => m.Valor)</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("GravaPedido", "Pedido", new { fornecedorId = Model.FornecedorId, data = Model.Data, cardapios = Model.Cardapios, itensSelecionados = Model.ItensCardapioSelecionado, valorPedido = Model.Valor, observacao = Model.Observacao})'">Salvar</button>            
+        </div>
+    </div>
+</div>
+}
+
+<!-- Modal -->
+<div class="modal fade" id="cardapioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Escolha um cardápio</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @foreach (var cardapio in Model.Cardapios)
+                {
+                    <div class="list-group" id="itensCardapio">
+                        <a href="@Url.Action("PreencheItens", "Pedido", new { fornecedorId = cardapio.FornecedorId, itens = cardapio.ItensCardapio })" class="list-group-item list-group-item-action flex-column align-items-start active">
+
+                            <div class="d-flex w-100 justify-content-between">
+                                <span style="font-size: large; font-weight: bold">@Html.DisplayFor(c => cardapio.NomeFornecedor, new { htmlAttributes = new { @class = "mb-1" } })</span>
+                            </div>
+                            <span style="padding-top: inherit">@Html.DisplayFor(c => cardapio.ItensCardapio, new { htmlAttributes = new { @class = "mb-1" } })</span>
+
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    @Html.ActionLink("Voltar", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jQueryFixes")
+}
+
